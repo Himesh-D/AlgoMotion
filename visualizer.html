@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AlgoMotion - Interactive Code Execution Visualizer</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo-group">
+          <div class="logo">
+            <img src="/favicon.png" alt="AlgoMotion Icon" class="app-logo-icon" />
+            <h1>AlgoMotion</h1>
+          </div>
+          <span class="subtitle">Algorithm Execution Lab</span>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-run-gradient" id="btn-run">▶ Run</button>
+          <button class="btn btn-outline" id="btn-reset" disabled>Reset</button>
+        </div>
+      </header>
+
+      <!-- Main Layout -->
+      <main class="main-layout">
+        <!-- Setup Panel -->
+        <section class="editor-panel panel" id="editor-panel">
+          <div class="panel-header">
+            <h2>⚙ Algorithm Setup</h2>
+          </div>
+          <div class="panel-content">
+            <!-- Data Type Selector -->
+            <div class="input-group">
+              <label for="data-type-select"><span class="icon">📊</span> Data Type</label>
+              <select id="data-type-select" class="theme-select">
+                <option value="array">Array</option>
+                <option value="string">String</option>
+              </select>
+            </div>
+
+            <!-- Algorithm Type -->
+            <div class="input-group">
+              <label for="algo-type-select"><span class="icon">🧩</span> Algorithm Type</label>
+              <select id="algo-type-select" class="theme-select">
+                <!-- Dynamically populated -->
+              </select>
+            </div>
+
+            <!-- Input Mode (Hidden or integrated into Data Type) -->
+            <input type="hidden" id="mode-select" value="array" />
+
+            <!-- Array Input -->
+            <div class="input-group">
+              <label for="array-input"><span class="icon">[]</span> Array</label>
+              <input type="text" id="array-input" placeholder="e.g. 2, 7, 11, 15" value="2, 7, 11, 15" />
+            </div>
+
+            <!-- Parameters -->
+            <div class="input-group">
+              <label for="params-input"><span class="icon">⚙</span> Parameters (JSON)</label>
+              <input type="text" id="params-input" placeholder='e.g. {"target": 9}' value='{"target": 9}' />
+            </div>
+
+            <!-- Collapsible Logic Editor -->
+            <div class="logic-section">
+              <button class="logic-toggle" id="logic-toggle">
+                <span class="logic-chevron" id="logic-chevron">▶</span>
+                Advanced Logic
+              </button>
+              <div class="logic-body" id="logic-body">
+                <div class="input-group flex-fill">
+                  <label for="code-input"><span class="icon">&lt;&gt;</span> Logic Snippet</label>
+                  <textarea id="code-input" spellcheck="false" placeholder="Write algorithm logic here...">
+let left = 0;
+let right = array.length - 1;
+
+while (left < right) {
+  let sum = array[left] + array[right];
+  
+  if (sum === target) {
+    return [left, right];
+  } else if (sum < target) {
+    left++;
+  } else {
+    right--;
+  }
+}
+return [];
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Draggable Vertical Resizer -->
+        <div class="resizer resizer-vertical" id="resizer-v"></div>
+
+        <!-- Visualization Area -->
+        <section class="visualization-area" id="visualization-area">
+          <div class="visualization-wrapper panel" id="visualization-wrapper">
+            <!-- Step badge -->
+            <div class="canvas-header">
+              <div class="status-pill" id="status-pill">
+                <div class="status-pill__section mode-section">
+                  <span class="status-icon" id="mode-icon">📊</span>
+                  <span class="mode-text" id="mode-indicator">Array → Traversal</span>
+                </div>
+                <div class="status-pill__divider"></div>
+                <div class="status-pill__section step-section">
+                  <span class="step-label">STEP</span>
+                  <span id="canvas-step-badge" class="step-number">0 / 0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Canvas -->
+            <div class="visualization-canvas" id="visualization-canvas">
+              <!-- Prism WebGL background -->
+              <div id="prism-bg" class="prism-bg"></div>
+
+              <!-- Array elements and pointers injected here -->
+
+              <!-- Floating Variable Chips Overlay -->
+              <div class="var-chips-overlay" id="var-chips-overlay"></div>
+            </div>
+
+            <!-- Explanation Card -->
+            <div class="explanation-card" id="explanation-panel">
+              <span class="explanation-icon">💡</span>
+              <span class="explanation-text" id="explanation-text">Waiting for execution...</span>
+            </div>
+
+            <!-- Toast container (inside canvas panel, bottom-right) -->
+            <div id="toast-container"></div>
+          </div>
+
+          <!-- Draggable Horizontal Resizer -->
+          <div class="resizer resizer-horizontal" id="resizer-h"></div>
+
+          <!-- Merged Control Strip -->
+          <div class="control-strip panel" id="control-strip">
+            <div class="controls-row">
+              <!-- Playback buttons -->
+              <div class="controls-group">
+                <button class="btn-icon" id="btn-replay" title="Replay from start" disabled>↺</button>
+                <button class="btn-icon" id="btn-prev" title="Previous Step" disabled>⏮</button>
+                <button class="btn-icon btn-play" id="btn-play" title="Play/Pause" disabled>▶</button>
+                <button class="btn-icon" id="btn-next" title="Next Step" disabled>⏭</button>
+              </div>
+
+              <!-- Slider + step count -->
+              <div class="slider-group">
+                <input type="range" id="timeline-slider" min="0" max="0" value="0" disabled />
+                <span id="step-counter" class="step-counter">Step 0 / 0</span>
+              </div>
+
+              <!-- Speed dropdown -->
+              <div class="speed-group">
+                <select id="speed-select" class="theme-select speed-select">
+                  <option value="0.5">0.5x</option>
+                  <option value="1" selected>1x</option>
+                  <option value="2">2x</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
