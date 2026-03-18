@@ -186,22 +186,23 @@ Everything runs **locally in the browser**.
 
 Frontend:
 
-* HTML
-* CSS
-* JavaScript
+- **React** (for Intro and Landing UI)
+- **Vanilla JavaScript** (for Execution Engine and visualization)
+- **Vite** (Next-gen build tool)
+- **Tailwind CSS** (for modern, responsive styling)
 
 Animation:
 
-* Anime.js
+- **GSAP** (for high-performance particle intro)
+- **Anime.js** (for step-by-step algorithm animation)
 
-Optional enhancements:
+Graphics:
 
-* Monaco Editor
-* Prism.js
+- **OGL** (for WebGL Prism background)
 
 Visualization:
 
-* DOM + CSS transforms
+- **DOM + CSS transforms**
 
 No backend required.
 
@@ -327,16 +328,20 @@ Main layout:
 
 # Navigation Flow
 
-### Step 1
+### Step 1: Intro Experience
 
-User opens app.
+User is greeted with a spiral animation and branding.
 
-Landing screen:
+### Step 2: Landing Page
 
-```
-Start Visualizing
-View Demo
-```
+User transitions into the modernized landing page after clicking "Start Visualizing".
+
+Landing screen features:
+
+- Navbar with quick links
+- Hero section with Launch button
+- Features grid explaining 6 core capabilities
+- Bottom CTA to enter the visualizer
 
 ---
 

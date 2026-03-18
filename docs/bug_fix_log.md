@@ -78,12 +78,27 @@ Enforced clean property declarations; visual verification now includes checking 
 
 ---
 
-## 6. Redundant Demo UI Logic
+## 7. Hybrid React Migration
 **Improvement:**
-The "Demo" dropdown was functionally redundant with the "Algorithm Type" selector and occupied valuable header space.
+Transitioned the entry experience (Intro/Landing) to **React** while maintaining the high-performance **Vanilla JS** execution engine for the visualizer.
+
+**Cause:**
+The previous vanilla landing page lacked the immersive first-impression qualities desired for the "AlgoMotion" brand.
 
 **Fix:**
-Removed the "Demo" button/dropdown. Integrated "Example Data" (array/string presets) directly into the `ALGO_OPTIONS` metadata in `main.js`. Selecting an algorithm now automatically populates high-quality test data.
+Introduced React and GSAP for the "Spiral Intro" and overhauled the landing page with a unified glassmorphic design. Integrated React via a dedicated `#intro-root` mount point in the existing `index.html`.
 
 **Benefit:**
-Streamlined header UI and unified the user journey for exploration.
+Premium "wow" factor upon entry without compromising the performance of the core visualization tool.
+
+---
+
+## 8. Intro Replay Logic
+**Improvement (User Request):**
+By default, the intro animation was set up to show only once per user (via `localStorage`). This was changed to show on **every load and reload**.
+
+**Fix:**
+Removed the `localStorage` checks in `app.jsx` and `IntroScreen.jsx`, ensuring the `showIntro` state is always initialized to `true`.
+
+**Benefit:**
+Provides a consistent branding experience every time the application is opened or refreshed, as requested.

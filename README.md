@@ -8,28 +8,30 @@ AlgoMotion is a browser-based tool that visually simulates how algorithms manipu
 
 ## 🚀 Key Features
 
+- **Immersive Intro Animation**: A high-performance spiral particle system powered by React and GSAP that welcomes users into the algorithm space.
+- **Modernized Landing Page**: A premium, glassmorphic UI overhaul with smooth transitions and a responsive multi-section layout.
 - **Interactive Workspace**: Input your own arrays, strings, and parameters.
 - **Custom Logic Execution**: Write or edit algorithm snippets in JavaScript and see them executed in real-time.
 - **Visual Execution Timeline**: Navigate through the algorithm's execution with Play, Pause, Next, and Previous controls.
 - **Variable Inspector**: Track variable changes (like pointers, sums, and indices) via floating chips and explanation cards.
-- **Premium UI**: Experience a modern, glassmorphic design with smooth Anime.js animations and a WebGL-powered background.
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Vanilla HTML/CSS/JS
+- **Core**: Vanilla JavaScript (Engine/Visualizer) + React (Intro/Landing UI)
+- **Animation**: [GSAP](https://greensock.com/gsap/) (Spiral Intro), [Anime.js](https://animejs.com/) (Algorithm Steps)
+- **Graphics**: [OGL](https://github.com/oframe/ogl) (WebGL Raymarching background)
+- **Styling**: Modern CSS with Glassmorphism, Tailwind CSS support, and Staggered Animations
 - **Bundler**: [Vite](https://vitejs.dev/)
-- **Animations**: [Anime.js](https://animejs.com/)
-- **Graphics**: [OGL](https://github.com/oframe/ogl) (for Prism WebGL background)
-- **Styling**: Modern CSS with Glassmorphism and Backdrop Filters
+- **Language**: JavaScript & TypeScript support
 
 ## 🏃 Getting Started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v16.0.0 or higher recommended)
+- [Node.js](https://nodejs.org/) (v18.0.0 or higher recommended)
 - Familiarity with JavaScript
 
-### Installation
+### Installation & Run
 
 1.  **Clone the repository:**
     ```bash
@@ -42,26 +44,12 @@ AlgoMotion is a browser-based tool that visually simulates how algorithms manipu
     npm install
     ```
 
-## 🚀 Core Features
+3.  **Run Development Server:**
+    ```bash
+    npm run dev
+    ```
 
-- **Algorithm Execution Engine**: Custom JavaScript instrumentation and sandboxing for state capture.
-- **Input Validation Layer**: Dedicated `InputParser` ensuring robust handling of arrays, strings, and parameters.
-- **Dynamic Visualization**: Responsive rendering of array states, pointers, and variables using `anime.js` and `ogl`.
-- **Customizable Logic**: Users can modify algorithm snippets in real-time with automatic recompilation.
-
-## 🛠 Tech Stack
-
-- **Core**: Vanilla JavaScript (ES Modules)
-- **Visuals**: `anime.js` (Animations), `ogl` (WebGL Raymarching)
-- **Styling**: Modern CSS with glassmorphism and premium themes
-- **Bundler**: Vite
-
-## 🚀 Getting Started
-
-```bash
-npm install
-npm run dev
-```
+The application will be available at `http://localhost:3000/`.
 
 The application will be available at `http://localhost:3000/`.
 

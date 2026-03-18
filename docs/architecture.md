@@ -2,26 +2,44 @@
 
 The core of AlgoMotion operates on a strict **State Timeline Architecture**, fully separating algorithm execution from visual rendering.
 
-## System Flow
+## System Flow (Hybrid Architecture)
+
+AlgoMotion uses a **Hybrid Architecture**: **React** handles the immersive UI (Intro/Landing), while **Vanilla JS** manages the high-performance execution engine and visualization.
 
 ```mermaid
 graph TD
-    UI(User Input / Algorithm Setup) --> |Run| P(Input Parsing)
-    P --> |array · params · code| EE(Execution Engine)
-    EE --> |injects recordState| CC(User Code Execution)
-    CC --> |pushes states| ST(State Timeline Array)
+    Intro(React: Spiral Intro) --> |Start Visualizing| Landing(React: Unified Landing Page)
+    Landing --> |Launch Demo| Visualizer(Vanilla JS: Algorithm Visualizer)
+    
+    subgraph Execution Loop
+        UI(User Input / Algorithm Setup) --> |Run| P(Input Parsing)
+        P --> |array · params · code| EE(Execution Engine)
+        EE --> |injects recordState| CC(User Code Execution)
+        CC --> |pushes states| ST(State Timeline Array)
+    end
+    
     ST --> TM(Timeline Manager)
     TM --> |onStateChange| AR(ArrayRenderer)
     TM --> |onStateChange| UIR(UIRenderer)
-    UIR --> Chips(Floating Var Chips)
-    UIR --> Card(Explanation Card)
+    
     AR --> Canvas(Visualization Canvas)
     Prism(Prism WebGL) --> BG(Canvas Background Layer)
 ```
 
 ---
 
-## 1. Input Parsing & Validation (`src/engine/InputParser.js`)
+## 1. Intro Animation System (`src/components/SpiralAnimation.jsx`)
+
+The entry experience is built with **React** and **GSAP** for high-fidelity particle control:
+
+- **SpiralAnimation**: A complex canvas-based particle engine simulating 5,000 "stars" moving along Fibonacci spiral paths.
+- **GSAP Timeline**: Manages the 15-second recursive animation loop independently of the main thread.
+- **State Management**: React handles the transition between the intro screen and the landing page, ensuring the intro only distracts once (or reloads as configured).
+- **CSS Transitions**: Uses hardware-accelerated transforms and opacity fades for a smooth "gateway" feel.
+
+---
+
+## 2. Input Parsing & Validation (`src/engine/InputParser.js`)
 
 The parsing logic is decoupled from the main UI orchestration via the `InputParser` class:
 
